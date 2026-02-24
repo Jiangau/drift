@@ -3,7 +3,11 @@ import { View, StyleSheet, Text, Button } from 'react-native'
 import { Audio } from 'expo-av'
 import * as Permission from 'expo-permissions'
 
-
+const AudioRecording = () => {
+  const [recording, setRecording] = useState(null);
+  const [AudioUri, setAudioUri] = useState(null);
+  const [recording, setRecording] = useState(null);
+}
 /*
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
