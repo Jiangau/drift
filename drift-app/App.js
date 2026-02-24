@@ -62,8 +62,8 @@ const AudioRecording = () => {
       name: 'recording.m4a',
     });
 
-    const HUME_API_KEY = '0PYrZuILnnOXyT51nGpQCAzflTGCqBZ5tdSAzn1CDidS8jnb';
-    const HUME_SECRET_KEY = '0Hh2GU1TPB8Y7wcNpSUsQyyxRih77lGj645O3EFuNuhEwyqiqpIRUD2WDpFYl1FG';
+    const HUME_API_KEY = '';
+    const HUME_SECRET_KEY = '';
 
     const accessToken = await fetchAccessToken({
       apiKey: HUME_API_KEY,
