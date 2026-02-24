@@ -58,6 +58,10 @@ return(
   </View>
 );
 
+const styles = StyleSheet.create({
+  
+});
+
 /*
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
