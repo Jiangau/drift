@@ -20,7 +20,7 @@ useEffect(() => {
     };
     permission();
   }
-}, [])
+}, []);
 
 const startRecording = async() => {
   try{
@@ -39,15 +39,18 @@ const startRecording = async() => {
   } catch (err){
     console.error( 'Cannot start recording, error:', err );
   };
-  startRecording();
 };
 
 const stopRecording = async() => {
   setIsRecording(false);
-  setAudioUri(uri);
   await recording.stopAndUnloadAsync();
+  setAudioUri(uri);
   setRecording(null);
 };
+
+return(
+
+)
 
 /*
 import { StatusBar } from 'expo-status-bar';
