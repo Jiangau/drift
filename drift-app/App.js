@@ -52,27 +52,6 @@ const AudioRecording = () => {
     setRecording(null);
   };
 
-  /*
-  const sendToHumeAI = async() => {
-    const formData = new FormData();
-
-    formData.append('file', {
-      uri: audioUri,
-      type: 'audio/m4a',
-      name: 'recording.m4a',
-    });
-
-    const HUME_API_KEY = '';
-    const HUME_SECRET_KEY = '';
-
-    const accessToken = await fetchAccessToken({
-      apiKey: HUME_API_KEY,
-      secretKey: HUME_SECRET_KEY
-    });
-
-    }
-  }*/
-
   //The view
   return(
     <View style={styles.container}>
