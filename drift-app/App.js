@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { View, StyleSheet, Text, Button } from 'react-native'
 import { Audio } from 'expo-av'
 import * as Permission from 'expo-permissions'
-import { getPermissionsAsync } from 'expo-av/build/Audio';
+import { getPermissionsAsync, setAudioModeAsync } from 'expo-av/build/Audio';
 
 const AudioRecording = () => {
   const [recording, setRecording] = useState(null);
@@ -23,8 +23,18 @@ useEffect(() => {
 }, [])
 
 const startRecording = async() => {
+  await Audio.requestPermissionsAsync();
+  await Audio.setAudioModeAsync({
+    allowsRecodingIOS: true,
+    playsInSilentModeIOS: true,
+    staysActiveInBackground: false,
+    interruptionModeIOS: 1,
+  });
 
-}
+
+};
+
+
 /*
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
