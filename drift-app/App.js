@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, Text, Button } from 'react-native'
-import { Audio } from 'expo-av'
-import * as Permission from 'expo-permissions'
-import { getPermissionsAsync, setAudioModeAsync } from 'expo-av/build/Audio';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, Text, Button } from 'react-native';
+import { Audio } from 'expo-av';
+//import * as Permission from 'expo-permissions';
 
 const AudioRecording = () => {
   const [recording, setRecording] = useState(null);
@@ -67,7 +66,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AudioRecorder;
+export default AudioRecording;
 
 /*
 import { StatusBar } from 'expo-status-bar';
