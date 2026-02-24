@@ -15,7 +15,7 @@ const AudioRecording = () => {
     const permission = async() => {
       const { status } = await Audio.requestPermissionsAsync();
       if (status !== 'granted'){
-        alert('Ready to Drift? Please tap Allow so we could run the app!')
+        alert('Ready to Drift? Please tap Allow so we can run the app!')
       };
     }
     permission();
@@ -42,6 +42,7 @@ const AudioRecording = () => {
 
   const stopRecording = async() => {
     setIsRecording(false);
+    if (!recording) return;
     await recording.stopAndUnloadAsync();
     const uri = recording.getURI();
     setAudioUri(uri);
@@ -54,7 +55,7 @@ const AudioRecording = () => {
         title = {isRecording ? "Stop Recording" : "Start Recording"}
         onPress = {isRecording ? stopRecording : startRecording}>
       </Button>
-      {audioUri && <Text>Recorded Audio: {audioUri}</Text>};
+      {audioUri && <Text>Recorded Audio: {audioUri}</Text>}
     </View>
   );
 };
