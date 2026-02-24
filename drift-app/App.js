@@ -12,6 +12,7 @@ const AudioRecording = () => {
 
 //Permission
 useEffect(() => {
+  //Declaring a function alled permission
   const permission = async() => {
     const status = await Audio.requestPermissionsAsync();
     if (status !== 'granted'){
