@@ -13,19 +13,19 @@ const AudioRecording = () => {
   useEffect(() => {
     //Declaring a function alled permission
     const permission = async() => {
-      const status = await Audio.requestPermissionsAsync();
+      const { status } = await Audio.requestPermissionsAsync();
       if (status !== 'granted'){
         alert('Ready to Drift? Please tap Allow so we could run the app!')
       };
-      permission();
     }
+    permission();
   }, []);
 
   const startRecording = async() => {
     try{
       await Audio.requestPermissionsAsync();
       await Audio.setAudioModeAsync({
-        allowsRecodingIOS: true,
+        allowsRecordingIOS: true,
         playsInSilentModeIOS: true,
         staysActiveInBackground: false,
         interruptionModeIOS: 1,
