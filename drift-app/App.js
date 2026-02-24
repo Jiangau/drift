@@ -6,8 +6,10 @@ import * as Permission from 'expo-permissions'
 const AudioRecording = () => {
   const [recording, setRecording] = useState(null);
   const [AudioUri, setAudioUri] = useState(null);
-  const [recording, setRecording] = useState(null);
-}
+  const [isRecording, setIsRecording] = useState(false);
+};
+
+
 /*
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
