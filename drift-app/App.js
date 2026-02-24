@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { View, StyleSheet, Text, Button } from 'react-native'
 import { Audio } from 'expo-av'
 import * as Permission from 'expo-permissions'
+import { getPermissionsAsync } from 'expo-av/build/Audio';
 
 const AudioRecording = () => {
   const [recording, setRecording] = useState(null);
@@ -9,7 +10,15 @@ const AudioRecording = () => {
   const [isRecording, setIsRecording] = useState(false);
 };
 
-
+useEffect(() => {
+  const permission = async() => {
+    const status = await Audio.requestPermissionsAsync();
+    if (status !== 'granted'){
+      alert('Ready to Drift? Please tap Allow so we could run the app!')
+    };
+    permission();
+  }
+}, [])
 /*
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
