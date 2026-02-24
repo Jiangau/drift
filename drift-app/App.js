@@ -8,63 +8,66 @@ const AudioRecording = () => {
   const [recording, setRecording] = useState(null);
   const [audioUri, setAudioUri] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
-};
 
-//Permission
-useEffect(() => {
-  //Declaring a function alled permission
-  const permission = async() => {
-    const status = await Audio.requestPermissionsAsync();
-    if (status !== 'granted'){
-      alert('Ready to Drift? Please tap Allow so we could run the app!')
+
+  //Permission
+  useEffect(() => {
+    //Declaring a function alled permission
+    const permission = async() => {
+      const status = await Audio.requestPermissionsAsync();
+      if (status !== 'granted'){
+        alert('Ready to Drift? Please tap Allow so we could run the app!')
+      };
+      permission();
+    }
+  }, []);
+
+  const startRecording = async() => {
+    try{
+      await Audio.requestPermissionsAsync();
+      await Audio.setAudioModeAsync({
+        allowsRecodingIOS: true,
+        playsInSilentModeIOS: true,
+        staysActiveInBackground: false,
+        interruptionModeIOS: 1,
+      });
+      const {recording} = await Audio.Recording.createAsync(
+        Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
+      );
+      setRecording(recording);
+      setIsRecording(true);
+    } catch (err){
+      console.error( 'Cannot start recording, error:', err );
     };
-    permission();
-  }
-}, []);
-
-const startRecording = async() => {
-  try{
-    await Audio.requestPermissionsAsync();
-    await Audio.setAudioModeAsync({
-      allowsRecodingIOS: true,
-      playsInSilentModeIOS: true,
-      staysActiveInBackground: false,
-      interruptionModeIOS: 1,
-    });
-    const {recording} = await Audio.Recording.createAsync(
-      Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
-    );
-    setRecording(recording);
-    setIsRecording(true);
-  } catch (err){
-    console.error( 'Cannot start recording, error:', err );
   };
-};
 
-const stopRecording = async() => {
-  setIsRecording(false);
-  await recording.stopAndUnloadAsync();
-  setAudioUri(uri);
-  setRecording(null);
-};
+  const stopRecording = async() => {
+    setIsRecording(false);
+    await recording.stopAndUnloadAsync();
+    setAudioUri(uri);
+    setRecording(null);
+  };
 
-return(
-  <View style={styles.container}>
-    <Button
-      title = {isRecording ? "Stop Recording" : "Start Recording"}
-      onPress = {isRecording ? stopRecording : startRecording}>
-    </Button>
-    {audioUri && <Text>Recorded Audio: {audioUri}</Text>};
-  </View>
-);
+  return(
+    <View style={styles.container}>
+      <Button
+        title = {isRecording ? "Stop Recording" : "Start Recording"}
+        onPress = {isRecording ? stopRecording : startRecording}>
+      </Button>
+      {audioUri && <Text>Recorded Audio: {audioUri}</Text>};
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center';
+    justifyContent: 'center',
     alignItems: 'center',
   },
 });
+
+export default AudioRecorder;
 
 /*
 import { StatusBar } from 'expo-status-bar';
