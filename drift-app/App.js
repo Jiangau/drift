@@ -23,15 +23,18 @@ useEffect(() => {
 }, [])
 
 const startRecording = async() => {
-  await Audio.requestPermissionsAsync();
-  await Audio.setAudioModeAsync({
-    allowsRecodingIOS: true,
-    playsInSilentModeIOS: true,
-    staysActiveInBackground: false,
-    interruptionModeIOS: 1,
-  });
-
-
+  try{
+    await Audio.requestPermissionsAsync();
+    await Audio.setAudioModeAsync({
+      allowsRecodingIOS: true,
+      playsInSilentModeIOS: true,
+      staysActiveInBackground: false,
+      interruptionModeIOS: 1,
+    });
+  } catch (err){
+    console.log( 'Cannot start recording, error:', err );
+  };
+  startRecording();
 };
 
 
