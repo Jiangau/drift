@@ -42,6 +42,9 @@ const startRecording = async() => {
   startRecording();
 };
 
+const stopRecording = async() => {
+  setIsRecording(false);
+};
 
 /*
 import { StatusBar } from 'expo-status-bar';
