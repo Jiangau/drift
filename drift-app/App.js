@@ -21,6 +21,7 @@ const AudioRecording = () => {
     permission();
   }, []);
 
+  //Start the recording func
   const startRecording = async() => {
     try{
       await Audio.requestPermissionsAsync();
@@ -40,6 +41,7 @@ const AudioRecording = () => {
     };
   };
 
+  //Stop the recording func
   const stopRecording = async() => {
     setIsRecording(false);
     if (!recording) return;
@@ -49,6 +51,7 @@ const AudioRecording = () => {
     setRecording(null);
   };
 
+  //The view
   return(
     <View style={styles.container}>
       <Button
@@ -60,6 +63,7 @@ const AudioRecording = () => {
   );
 };
 
+  //Stylesheet
 const styles = StyleSheet.create({
   container: {
     flex: 1,
