@@ -10,6 +10,7 @@ const AudioRecording = () => {
   const [isRecording, setIsRecording] = useState(false);
 };
 
+//Permission
 useEffect(() => {
   const permission = async() => {
     const status = await Audio.requestPermissionsAsync();
