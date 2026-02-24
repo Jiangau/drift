@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, Button } from 'react-native';
 import { Audio } from 'expo-av';
-import {fetchAccessToken} from 'hume';
+//import {fetchAccessToken} from 'hume';
 //import * as Permission from 'expo-permissions';
 
 const AudioRecording = () => {
