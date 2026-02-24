@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { View, StyleSheet, Text, Button } from 'react-native'
 import { Audio } from 'expo-av'
 import * as Permission from 'expo-permissions'
 
