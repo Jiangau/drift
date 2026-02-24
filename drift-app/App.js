@@ -49,7 +49,7 @@ const stopRecording = async() => {
 };
 
 return(
-  <View>
+  <View style={styles.container}>
     <Button
       title = {isRecording ? "Stop Recording" : "Start Recording"}
       onPress = {isRecording ? stopRecording : startRecording}>
