@@ -51,11 +51,25 @@ const AudioRecording = () => {
     setRecording(null);
   };
 
+  const sendToHumeAI = async() => {
+    const changeForm = new FormData();
+
+    changeForm.append('file', {
+      uri: AudioUri,
+      type: 'audio/m4a',
+      name: 'recording.m4a',
+    });
+
+    const response = await fetch("..."){
+      method: 'POST';
+    }
+  }
+
   //The view
   return(
     <View style={styles.container}>
       <Button
-        title = {isRecording ? "Stop Recording" : "Start Recording"}
+        title = {isRecording ? 'Stop Recording' : 'Start Recording'}
         onPress = {isRecording ? stopRecording : startRecording}>
       </Button>
       {audioUri && <Text>Recorded Audio: {audioUri}</Text>}
