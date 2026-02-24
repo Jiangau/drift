@@ -9,13 +9,8 @@ load_dotenv()
 app = Flask(__name__)
 client = HumeClient(api_key=os.getenv("HUME_API_KEY"))
 
-job_id = client.expression_measurement.batch.start_inference_job(
-    urls=["https://hume-tutorials.s3.amazonaws.com/faces.zip"],
-    models=Models(
-        prosody=Prosody(granularity="utterance"),
-    ),
-)
-print(f"Job ID: {job_id}")
+@app.route("/analyze", methods=["POST"])
+def audioSend():
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5001, debug=True)
