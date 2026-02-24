@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, Button } from 'react-native';
 import { Audio } from 'expo-av';
+import {fetchAccessToken} from 'hume';
 //import * as Permission from 'expo-permissions';
 
 const AudioRecording = () => {
@@ -51,19 +52,26 @@ const AudioRecording = () => {
     setRecording(null);
   };
 
+  /*
   const sendToHumeAI = async() => {
-    const changeForm = new FormData();
+    const formData = new FormData();
 
-    changeForm.append('file', {
-      uri: AudioUri,
+    formData.append('file', {
+      uri: audioUri,
       type: 'audio/m4a',
       name: 'recording.m4a',
     });
 
-    const response = await fetch("..."){
-      method: 'POST';
+    const HUME_API_KEY = '0PYrZuILnnOXyT51nGpQCAzflTGCqBZ5tdSAzn1CDidS8jnb';
+    const HUME_SECRET_KEY = '0Hh2GU1TPB8Y7wcNpSUsQyyxRih77lGj645O3EFuNuhEwyqiqpIRUD2WDpFYl1FG';
+
+    const accessToken = await fetchAccessToken({
+      apiKey: HUME_API_KEY,
+      secretKey: HUME_SECRET_KEY
+    });
+
     }
-  }
+  }*/
 
   //The view
   return(
