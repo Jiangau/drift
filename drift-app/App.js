@@ -44,6 +44,9 @@ const startRecording = async() => {
 
 const stopRecording = async() => {
   setIsRecording(false);
+  setAudioUri(uri);
+  await recording.stopAndUnloadAsync();
+  setRecording(null);
 };
 
 /*
