@@ -31,8 +31,13 @@ const startRecording = async() => {
       staysActiveInBackground: false,
       interruptionModeIOS: 1,
     });
+    const {recording} = await Audio.Recording.createAsync(
+      Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
+    );
+    setRecording(recording);
+    setIsRecording(true);
   } catch (err){
-    console.log( 'Cannot start recording, error:', err );
+    console.error( 'Cannot start recording, error:', err );
   };
   startRecording();
 };
