@@ -43,6 +43,7 @@ const AudioRecording = () => {
   const stopRecording = async() => {
     setIsRecording(false);
     await recording.stopAndUnloadAsync();
+    const uri = recording.getURI();
     setAudioUri(uri);
     setRecording(null);
   };
