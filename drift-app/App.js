@@ -6,7 +6,7 @@ import { getPermissionsAsync, setAudioModeAsync } from 'expo-av/build/Audio';
 
 const AudioRecording = () => {
   const [recording, setRecording] = useState(null);
-  const [AudioUri, setAudioUri] = useState(null);
+  const [audioUri, setAudioUri] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
 };
 
@@ -49,8 +49,14 @@ const stopRecording = async() => {
 };
 
 return(
-
-)
+  <View>
+    <Button
+      title = {isRecording ? "Stop Recording" : "Start Recording"}
+      onPress = {isRecording ? stopRecording : startRecording}>
+    </Button>
+    {audioUri && <Text>Recorded Audio: {audioUri}</Text>};
+  </View>
+);
 
 /*
 import { StatusBar } from 'expo-status-bar';
