@@ -23,6 +23,7 @@ def sendAudio():
         )
         result = client.expression_measurement.batch.get_job_predictions(job_id)
         return jsonify(result), 200
+    
     except Exception as e:
         return jsonify({
             "status":"error",

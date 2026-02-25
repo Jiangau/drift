@@ -72,14 +72,15 @@ const AudioRecording = () => {
 
 
   const sendingMessage = async() => {
+    if (!audioUri) return;
     const formData = new FormData();
     formData.append('file',{
-      uri: Platform.OS === 'android' ? mp3Uri : mp3Uri.replace('file://',''),
-      name: 'recording.mp3',
-      type: 'audio/mpeg',
+      uri: Platform.OS === 'android' ? audioUri : audioUri.replace('file://',''),
+      name: 'recording.m4a',
+      type: 'audio/m4a',
     });
     try{
-      const response = await fetch(`http://192.168.1.182:5001/result/${job_id}`,{
+      const response = await fetch(`http://192.168.1.182`,{ //:5001/result/${job_id}
         method: 'POST',
         body: formData,
         headers: {
