@@ -3,6 +3,7 @@ from hume import HumeClient
 from dotenv import load_dotenv
 from flask import Flask, jsonify, request
 import os
+import time
 
 load_dotenv()
 
@@ -12,21 +13,23 @@ client = HumeClient(api_key=os.getenv("HUME_API_KEY"))
 @app.route('/analyze', methods=["POST"])
 def sendAudio():
     try:
-        if 'file' not in request.files:
-            return jsonify({"error: No file in this part"})
+        #if 'file' not in request.files:
+            #return jsonify({"error: No file in this part"})
 
         audioFile = request.files['file']
+        
         job_id = client.expression_measurement.batch.start_inference_job(
             files =[(audioFile.filename, audioFile.read())],
             models=Models(prosody=Prosody(granularity="utterance"),),
         )
+        
         while True:
             status = client.expression_measurement.batch.get_job_status(job_id)
             if status == "COMPLETED":
                 break
             elif status == "FAILED":
                 return jsonify({"error":"Humejobfailed"}),500
-            
+            time.sleep(2)
             
         result = client.expression_measurement.batch.get_job_predictions(job_id)
         return jsonify(result), 200
