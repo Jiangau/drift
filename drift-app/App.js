@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, Button } from 'react-native';
 import { Audio } from 'expo-av';
+import { AndroidOutputFormat } from 'expo-av/build/Audio';
 //import {fetchAccessToken} from 'hume';
 //import * as Permission from 'expo-permissions';
 
@@ -33,7 +34,20 @@ const AudioRecording = () => {
         interruptionModeIOS: 1,
       });
       const {recording} = await Audio.Recording.createAsync(
-        Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
+        Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY,
+        {
+          android: {
+            AndroidOutputFormat: Audio.RECORDING_OPTION_ANDROID_OUTPUT_FORMAT_MPEG_4,
+            audioEncoder: Audio.RECORDING_OPTION_ANDROID_AUDIO_ENCODER_AAC,
+          },
+          ios: {
+            outputFormat: Audio.RECORDING_OPTION_IOS_OUTPUT_FORMAT_MPEG4AAC,
+            audioQuality: Audio.RECORDING_OPTION_IOS_AUIO_QUALITY_HIGH,
+            sampleRate: 44100,
+            numberOfChannels: 2,
+            bitRate: 128000,
+          },
+        },
       );
       setRecording(recording);
       setIsRecording(true);
@@ -50,6 +64,18 @@ const AudioRecording = () => {
     const uri = recording.getURI();
     setAudioUri(uri);
     setRecording(null);
+  };
+
+
+  const sendingMessage = async() => {
+    try{
+      const response = await fetch(`https://192.168.1.182:5001/result/${job_id}`);
+      const data = await response.json();
+      console.log("Prediction:",data);
+
+    } catch(err){
+      console.error("Cannot send the message",err)
+    };
   };
 
   //The view
