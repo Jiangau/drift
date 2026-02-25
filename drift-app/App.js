@@ -68,6 +68,7 @@ const AudioRecording = () => {
     const uri = recording.getURI();
     setAudioUri(uri);
     setRecording(null);
+    sendingMessage();
   };
 
 

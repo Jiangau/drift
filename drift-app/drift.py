@@ -16,11 +16,18 @@ def sendAudio():
             return jsonify({"error: No file in this part"})
 
         audioFile = request.files['file']
-        
         job_id = client.expression_measurement.batch.start_inference_job(
             files =[(audioFile.filename, audioFile.read())],
             models=Models(prosody=Prosody(granularity="utterance"),),
         )
+        while True:
+            status = client.expression_measurement.batch.get_job_status(job_id)
+            if status == "COMPLETED":
+                break
+            elif status == "FAILED":
+                return jsonify({"error":"Humejobfailed"}),500
+            
+            
         result = client.expression_measurement.batch.get_job_predictions(job_id)
         return jsonify(result), 200
     
