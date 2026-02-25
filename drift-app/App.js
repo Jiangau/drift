@@ -27,16 +27,21 @@ const AudioRecording = () => {
   const startRecording = async() => {
     try{
       if (isRecording) return;
+      if (recording){
+        await recording.stopAndUnloadAsync().catch(() => {});
+        setRecording(null);
+      }
 
       await Audio.requestPermissionsAsync();
       await Audio.setAudioModeAsync({
         allowsRecordingIOS: true,
         playsInSilentModeIOS: true,
-        staysActiveInBackground: false,
-        interruptionModeIOS: 1,
+        //staysActiveInBackground: false,
+        //interruptionModeIOS: 1,
       });
       const {recording} = await Audio.Recording.createAsync(
         Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY,
+        /*
         {
           android: {
             extension: ".mp3",
@@ -51,7 +56,7 @@ const AudioRecording = () => {
             numberOfChannels: 2,
             bitRate: 128000,
           },
-        },
+        },*/
       );
       setRecording(recording);
       setIsRecording(true);
