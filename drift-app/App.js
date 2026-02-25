@@ -37,10 +37,12 @@ const AudioRecording = () => {
         Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY,
         {
           android: {
-            AndroidOutputFormat: Audio.RECORDING_OPTION_ANDROID_OUTPUT_FORMAT_MPEG_4,
+            extension: ".mp3",
+            outputFormat: Audio.RECORDING_OPTION_ANDROID_OUTPUT_FORMAT_MPEG_4,
             audioEncoder: Audio.RECORDING_OPTION_ANDROID_AUDIO_ENCODER_AAC,
           },
           ios: {
+            extension: ".m4a",
             outputFormat: Audio.RECORDING_OPTION_IOS_OUTPUT_FORMAT_MPEG4AAC,
             audioQuality: Audio.RECORDING_OPTION_IOS_AUIO_QUALITY_HIGH,
             sampleRate: 44100,
@@ -68,10 +70,22 @@ const AudioRecording = () => {
 
 
   const sendingMessage = async() => {
+    const formData = new FormData();
+    formData.append('file',{
+      uri: Platform.OS === 'android' ? mp3Uri : mp3Uri.replace('file://',''),
+      name: 'recording.mp3',
+      type: 'audio/mpeg',
+    });
     try{
-      const response = await fetch(`https://192.168.1.182:5001/result/${job_id}`);
+      const response = await fetch(`http://192.168.1.182:5001/result/${job_id}`,{
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+      });
       const data = await response.json();
-      console.log("Prediction:",data);
+      console.log("Prediction:",data);  
 
     } catch(err){
       console.error("Cannot send the message",err)
