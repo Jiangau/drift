@@ -81,15 +81,15 @@ const AudioRecording = () => {
     });
 
     try{
-      console.log("IT'sWORKINGNOW")
+      console.log("Sending message")
       const response = await fetch(`http://192.168.1.182:5001/analyze`,{ //:5001/result/${job_id}
         method: 'POST',
         body: formData,
-        //headers: {'Content-Type': 'multipart/form-data'},
+        //headers: {'Accept': 'application/json'},
       });
 
       const data = await response.json();
-      console.log("Prediction:",JSON.stringify(data));  
+      console.log("Prediction:",JSON.stringify(data,null,2));  
 
     } catch(err){
       console.error("Cannot send the message",err)
