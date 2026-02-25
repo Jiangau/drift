@@ -28,18 +28,24 @@ const AudioRecording = () => {
     try{
       if (isRecording) return;
       if (recording){
-        await recording.stopAndUnloadAsync().catch(() => {});
-        setRecording(null);
+        try{
+          await recording.stopAndUnloadAsync();
+          //setRecording(null);
+        } catch (err){
+          console.error(err);
+        }
       }
 
-      await Audio.requestPermissionsAsync();
+      //await Audio.requestPermissionsAsync();
       await Audio.setAudioModeAsync({
         allowsRecordingIOS: true,
         playsInSilentModeIOS: true,
       });
+
       const {recording} = await Audio.Recording.createAsync(
         Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY,
       );
+      
       setRecording(recording);
       setIsRecording(true);
     } catch (err){
@@ -51,32 +57,39 @@ const AudioRecording = () => {
   const stopRecording = async() => {
     setIsRecording(false);
     if (!recording) return;
+    
     await recording.stopAndUnloadAsync();
     const uri = recording.getURI();
     setAudioUri(uri);
     setRecording(null);
-    sendingMessage();
+    sendingMessage(uri);
   };
 
 
-  const sendingMessage = async() => {
-    if (!audioUri) return;
+  const sendingMessage = async(uri) => {
+
+    if (!uri){
+      console.error("NO_URI_");
+      return;
+    };
+
     const formData = new FormData();
     formData.append('file',{
-      uri: Platform.OS === 'android' ? audioUri : audioUri.replace('file://',''),
+      uri: uri,//Platform.OS === 'android' ? audioUri : audioUri.replace('file://',''),
       name: 'recording.m4a',
       type: 'audio/m4a',
     });
+
     try{
-      const response = await fetch(`http://192.168.1.182`,{ //:5001/result/${job_id}
+      console.log("IT'sWORKINGNOW")
+      const response = await fetch(`http://192.168.1.182:5001/analyze`,{ //:5001/result/${job_id}
         method: 'POST',
         body: formData,
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
+        //headers: {'Content-Type': 'multipart/form-data'},
       });
+
       const data = await response.json();
-      console.log("Prediction:",data);  
+      console.log("Prediction:",JSON.stringify(data));  
 
     } catch(err){
       console.error("Cannot send the message",err)
