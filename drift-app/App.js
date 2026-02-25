@@ -26,6 +26,8 @@ const AudioRecording = () => {
   //Start the recording func
   const startRecording = async() => {
     try{
+      if (isRecording) return;
+
       await Audio.requestPermissionsAsync();
       await Audio.setAudioModeAsync({
         allowsRecordingIOS: true,
