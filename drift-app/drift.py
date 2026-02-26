@@ -24,13 +24,11 @@ def sendAudio():
 
         print(f"File received:{audioFile.filename}")
         
-        jobResponse = client.expression_measurement.batch.start_inference_job_from_local_file(
+        job_id = client.expression_measurement.batch.start_inference_job_from_local_file(
             file=[(audioFile.filename, audioFile.stream)],
             json=Models(prosody=Prosody(granularity="utterance"),),
             
         )
-        
-        job_id = jobResponse.job_id
         
         print(jsonify(f"Jobstarted. {job_id}"), 200)
         while True:
@@ -47,7 +45,7 @@ def sendAudio():
             print(f"Status: {status}")
             time.sleep(3)
         
-        result = client.expression_measurement.batch.get_job_predictions(jobResponse)
+        result = client.expression_measurement.batch.get_job_predictions(job_id)
         #serializable_result = [r.dict() if hasattr(r, 'dict') else r for r in result]
         return jsonify(list(result)), 200
     
