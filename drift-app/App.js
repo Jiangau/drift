@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, Button } from 'react-native';
+import { View, StyleSheet, Text, Button, Platform } from 'react-native';
 import { Audio } from 'expo-av';
 import { AndroidOutputFormat } from 'expo-av/build/Audio';
 //import {fetchAccessToken} from 'hume';
@@ -81,8 +81,9 @@ const AudioRecording = () => {
     console.log(blob.size);
     
     const formData = new FormData();
+    const cleanUri = Platform.OS === 'ios' ? uri.replace('file://','') : uri;
     formData.append('file',{
-      uri: uri,//Platform.OS === 'android' ? audioUri : audioUri.replace('file://',''),
+      uri: cleanUri,//Platform.OS === 'android' ? audioUri : audioUri.replace('file://',''),
       name: 'recording.m4a',
       type: 'audio/m4a',
     });
@@ -91,7 +92,7 @@ const AudioRecording = () => {
       const response = await fetch(`http://192.168.1.182:5001/analyze`,{ //:5001/result/${job_id}
         method: 'POST',
         body: formData,
-        //headers: {'Accept': 'application/json'},
+        headers: {'Content-Type': 'application/json'},
       });
 
       const data = await response.json();
