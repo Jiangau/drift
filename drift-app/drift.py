@@ -14,9 +14,7 @@ client = HumeClient(api_key=os.getenv("HUME_API_KEY"))
 @app.route('/analyze', methods=['GET','POST'])
 def sendAudio():
     try:
-        #if 'file' not in request.files:
-         #   return jsonify({"error: No file"}),400
-        
+        print("Files arrived:", list(request.files.keys()))
         print(request.files.get('file'))
         audioFile = request.files.get('file')
         
@@ -26,9 +24,10 @@ def sendAudio():
 
         print(f"File received:{audioFile.filename}")
         
-        jobResponse = client.expression_measurement.batch.start_inference_job(
-            files=[(audioFile.filename, audioFile.stream)],
-            models=Models(prosody=Prosody(granularity="utterance"),),
+        jobResponse = client.expression_measurement.batch.start_inference_job_from_local_file(
+            file=[(audioFile.filename, audioFile.stream)],
+            json=Models(prosody=Prosody(granularity="utterance"),),
+            
         )
         
         job_id = jobResponse.job_id
