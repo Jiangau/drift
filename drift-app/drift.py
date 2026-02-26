@@ -3,6 +3,7 @@ from hume import HumeClient
 from dotenv import load_dotenv
 from flask import Flask, jsonify, request
 import os
+import io
 import time
 
 load_dotenv()
@@ -15,15 +16,19 @@ print(os.getenv("HUME_API_KEY"))
 def sendAudio():
     try:
         if 'file' not in request.files:
-            return jsonify({"error: No file in this part"}),400
+            return jsonify({"error: No file"}),400
 
         audioFile = request.files['file']
+        fileContent = audioFile.read()
         
-        job_id = client.expression_measurement.batch.start_inference_job(
-            files =[(audioFile.filename, audioFile.read())],
+        jobResponse = client.expression_measurement.batch.start_inference_job(
+            [(audioFile.filename, audioFile.stream)],
             models=Models(prosody=Prosody(granularity="utterance"),),
         )
         
+        job_id= jobResponse.id
+        
+        print(jsonify(f"Jobstarted. {job_id}"), 200)
         while True:
             job_details = client.expression_measurement.batch.get_job_details(id=job_id)
             status = job_details.state.status
@@ -37,12 +42,14 @@ def sendAudio():
 
             print(f"Status: {status}")
             time.sleep(3)
-
-            
+        
         result = client.expression_measurement.batch.get_job_predictions(job_id)
-        return jsonify(result), 200
+        serializable_result = [r.dict() if hasattr(r, 'dict') else r for r in result]
+        return jsonify(serializable_result), 200
     
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         return jsonify({
             "status":"error",
             "message": str(e)
