@@ -25,7 +25,9 @@ const AudioRecording = () => {
 
   //Start the recording func
   const startRecording = async() => {
+
     try{
+
       if (isRecording) return;
       if (recording){
         try{
@@ -73,6 +75,11 @@ const AudioRecording = () => {
       return;
     };
 
+  try{
+    const filePresence = await fetch(uri);
+    const blob = await filePresence.blob();
+    console.log(blob.size);
+    
     const formData = new FormData();
     formData.append('file',{
       uri: uri,//Platform.OS === 'android' ? audioUri : audioUri.replace('file://',''),
@@ -80,7 +87,6 @@ const AudioRecording = () => {
       type: 'audio/m4a',
     });
 
-    try{
       console.log("Sending message")
       const response = await fetch(`http://192.168.1.182:5001/analyze`,{ //:5001/result/${job_id}
         method: 'POST',
