@@ -50,7 +50,7 @@ def sendAudio():
         
         def topEmotions(resultDict, attr):
             if not resultDict: return []
-            emotions = getattr(resultDict[0], attr, [])
+            emotions = getattr(resultDict, attr, [])
             sortedDict = sorted(emotions, key=lambda x:x.score)
             return [{"name":y.name, "score": y.score} for y in sortedDict[:3]]
 
@@ -60,10 +60,10 @@ def sendAudio():
         modelData = None
         
         
-        if fileResult.prosody:
+        if fileResult.prosody and fileResult.prosody.grouped_predictions:
             modelData = fileResult.prosody.grouped_predictions[0].predictions[0]
             finalOutput = topEmotions(modelData, "emotions")
-        elif fileResult.burst:
+        elif fileResult.burst and fileResult.burst.grouped_predictions:
             modelData = fileResult.burst.grouped_predictions[0].predictions[0]
             finalOutput = topEmotions(modelData, "descriptions")
             
