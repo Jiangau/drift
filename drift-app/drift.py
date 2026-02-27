@@ -47,7 +47,7 @@ def sendAudio():
         
         result = client.expression_measurement.batch.get_job_predictions(job_id)
         #serializableResult = [r.dict() if hasattr(r, 'dict') else r for r in result]
-        
+        """
         fileResult = result[0].results.predictions[0].models
         modelData = None
         
@@ -64,7 +64,12 @@ def sendAudio():
                 emotions = getattr(prediction, dictName)
                 
                 sortingEmotions = sorted(emotions, key=lambda x:x.score)
-                
+        """
+        
+        def topEmotions(resultDict, attr):
+            if not resultDict: return []
+            emotions = getattr(resultDict[0], attr, [])
+            
 
         return jsonify(list(sortingEmotions)), 200
     
