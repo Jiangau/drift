@@ -47,8 +47,8 @@ def sendAudio():
         
         result = client.expression_measurement.batch.get_job_predictions(job_id)
         serializableResult = [r.dict() if hasattr(r, 'dict') else r for r in result]
-        topPrediction = serializableResult[0]
-        return jsonify("The following predictions",list(serializableResult),"Top Prediction is:", topPrediction), 200
+
+        return jsonify(list(serializableResult)), 200
     
     except Exception as e:
         import traceback
