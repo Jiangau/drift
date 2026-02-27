@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, Button, Platform } from 'react-native';
 import { Audio } from 'expo-av';
 import { AndroidOutputFormat } from 'expo-av/build/Audio';
-//import {fetchAccessToken} from 'hume';
-//import * as Permission from 'expo-permissions';
 
 const AudioRecording = () => {
   const [recording, setRecording] = useState(null);
@@ -32,13 +30,11 @@ const AudioRecording = () => {
       if (recording){
         try{
           await recording.stopAndUnloadAsync();
-          //setRecording(null);
         } catch (err){
           console.error(err);
         }
       }
 
-      //await Audio.requestPermissionsAsync();
       await Audio.setAudioModeAsync({
         allowsRecordingIOS: true,
         playsInSilentModeIOS: true,
@@ -125,25 +121,3 @@ const styles = StyleSheet.create({
 });
 
 export default AudioRecording;
-
-/*
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Working yet.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});*/
