@@ -47,6 +47,14 @@ def sendAudio():
         
         result = client.expression_measurement.batch.get_job_predictions(job_id)
         serializableResult = [r.dict() if hasattr(r, 'dict') else r for r in result]
+        
+        fileResult = result[0].results.predictions[0].models
+        modelData = None
+        
+        if fileResult.prosody:
+            modelData = fileResult.prosody.grouped_predictions[0].predictions[0]
+        else:
+            modelData = fileResult.burst.grouped_predictions[0].predictions[0]
 
         return jsonify(list(serializableResult)), 200
     
