@@ -46,15 +46,16 @@ def sendAudio():
             time.sleep(3)
         
         result = client.expression_measurement.batch.get_job_predictions(job_id)
-        serializableResult = [r.dict() if hasattr(r, 'dict') else r for r in result]
+        #serializableResult = [r.dict() if hasattr(r, 'dict') else r for r in result]
         
         fileResult = result[0].results.predictions[0].models
         modelData = None
         
+        
         if fileResult.prosody:
             modelData = fileResult.prosody.grouped_predictions[0].predictions[0]
             dictName = "emotions"
-        else:
+        elif fileResult.burst:
             modelData = fileResult.burst.grouped_predictions[0].predictions[0]
             dictName = "descriptions"
             
@@ -65,7 +66,7 @@ def sendAudio():
                 sortingEmotions = sorted(emotions, key=lambda x:x.score)
                 
 
-        return jsonify(list(serializableResult)), 200
+        return jsonify(list(sortingEmotions)), 200
     
     except Exception as e:
         import traceback
