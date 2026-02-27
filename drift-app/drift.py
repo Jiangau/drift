@@ -53,8 +53,17 @@ def sendAudio():
         
         if fileResult.prosody:
             modelData = fileResult.prosody.grouped_predictions[0].predictions[0]
+            dictName = "emotions"
         else:
             modelData = fileResult.burst.grouped_predictions[0].predictions[0]
+            dictName = "descriptions"
+            
+        if modelData:
+            for prediction in modelData:
+                emotions = getattr(prediction, dictName)
+                
+                sortingEmotions = sorted(emotions, key=lambda x:x.score)
+                
 
         return jsonify(list(serializableResult)), 200
     
