@@ -47,31 +47,28 @@ def sendAudio():
         
         result = client.expression_measurement.batch.get_job_predictions(job_id)
         #serializableResult = [r.dict() if hasattr(r, 'dict') else r for r in result]
-        """
-        fileResult = result[0].results.predictions[0].models
+        
+        def topEmotions(resultDict, attr):
+            if not resultDict: return []
+            emotions = getattr(resultDict[0], attr, [])
+            sortedDict = sorted(emotions, key=lambda x:x.score)
+            return [{"name":y.name, "score": y.score} for y in sortedDict[:3]]
+
+        temp = result[0]
+        fileResult = temp.results.predictions[0].models
+        finalOutput = []
         modelData = None
         
         
         if fileResult.prosody:
             modelData = fileResult.prosody.grouped_predictions[0].predictions[0]
-            dictName = "emotions"
+            finalOutput = topEmotions(modelData, "emotions")
         elif fileResult.burst:
             modelData = fileResult.burst.grouped_predictions[0].predictions[0]
-            dictName = "descriptions"
+            finalOutput = topEmotions(modelData, "descriptions")
             
-        if modelData:
-            for prediction in modelData:
-                emotions = getattr(prediction, dictName)
-                
-                sortingEmotions = sorted(emotions, key=lambda x:x.score)
-        """
         
-        def topEmotions(resultDict, attr):
-            if not resultDict: return []
-            emotions = getattr(resultDict[0], attr, [])
-            
-
-        return jsonify(list(sortingEmotions)), 200
+        return jsonify(finalOutput), 200
     
     except Exception as e:
         import traceback
