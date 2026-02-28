@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     alignItems: 'left',
   },
   loadingContent:{
-    alignItems: 'center', 
+    paddingLeft: 120,
   },
   resultContainer:{
     backgroundColor: '#fff7e7',
