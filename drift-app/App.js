@@ -108,9 +108,11 @@ const AudioRecording = () => {
     <View style={styles.container}>
       <Button
         title = {isRecording ? 'Stop Recording' : 'Start Recording'}
-        onPress = {isRecording ? stopRecording : startRecording}>
+        onPress = {isRecording ? stopRecording : startRecording}
+        disabled = {loading}>
       </Button>
-      {audioUri && <Text>Recorded Audio: {audioUri}</Text>}
+      {/*{audioUri && <Text>Recorded Audio: {audioUri}</Text>}*/}
+      {loading && <Text></Text>}
     </View>
   );
 };
