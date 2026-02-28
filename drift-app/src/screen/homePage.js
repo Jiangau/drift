@@ -23,4 +23,25 @@ export default function mainScreen() {
     };
 
 
-}
+    return(
+        <View style={styles.container}>
+          <Button 
+            title = {isRecording ? 'Stop Recording' : 'Start Recording'}
+            onPress = {isRecording ? stopRecording : startRecording}
+            disabled = {loading}>
+          </Button>
+          
+          {loading && <Text style={styles.loadingContent}>Waiting for the result ...</Text>}
+    
+          <View style={styles.resultContainer}>
+            {emotion.map((item, index) => (
+              <View key={index}>
+                <Text style={styles.emotionTag}>{item.name}</Text>
+                <Text style={styles.numberTag}>{(item.score * 100).toFixed(2)}</Text>
+              </View>
+            ))}
+            </View>
+          </View>
+      );
+
+};
