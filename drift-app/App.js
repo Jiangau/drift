@@ -112,15 +112,16 @@ const AudioRecording = () => {
         title = {isRecording ? 'Stop Recording' : 'Start Recording'}
         onPress = {isRecording ? stopRecording : startRecording}>
       </Button>
-      {audioUri && <Text>Recorded Audio: {audioUri}</Text>}
+      
       <View>
-        {emotion.map((item, index) =>(
+        {emotion.map((item, index) => (
           <View key={index}>
-            
-        ))
+            <Text>{item.name}</Text>
+            <Text>{item.score}</Text>
+          </View>
+        ))}
+        </View>
       </View>
-
-    </View>
   );
 };
 
