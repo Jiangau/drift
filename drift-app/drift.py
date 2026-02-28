@@ -51,7 +51,7 @@ def sendAudio():
         def topEmotions(resultDict, attr):
             if not resultDict: return []
             emotions = getattr(resultDict, attr, [])
-            sortedDict = sorted(emotions, key=lambda x:x.score)
+            sortedDict = sorted(emotions, key=lambda x:x.score, reverse=True)
             return [{"name":y.name, "score": y.score} for y in sortedDict[:3]]
 
         temp = result[0]
