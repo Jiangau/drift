@@ -71,7 +71,7 @@ const AudioRecording = () => {
 
 
   const sendingMessage = async(uri) => {
-    
+
     setLoading(true);
 
     if (!uri){
@@ -101,6 +101,7 @@ const AudioRecording = () => {
 
       const data = await response.json();
       setEmotion(data);
+      setLoading(false);
       console.log("Prediction:",JSON.stringify(data,null,2));
 
     } catch(err){
@@ -113,7 +114,8 @@ const AudioRecording = () => {
     <View style={styles.container}>
       <Button
         title = {isRecording ? 'Stop Recording' : 'Start Recording'}
-        onPress = {isRecording ? stopRecording : startRecording}>
+        onPress = {isRecording ? stopRecording : startRecording}
+        disabled = {loading}>
       </Button>
       
       <View>
