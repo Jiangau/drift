@@ -100,7 +100,6 @@ const AudioRecording = () => {
       setEmotion(data);
       console.log("Prediction:",JSON.stringify(data,null,2));
 
-
     } catch(err){
       console.error("Cannot send the message",err)
     };
@@ -114,6 +113,13 @@ const AudioRecording = () => {
         onPress = {isRecording ? stopRecording : startRecording}>
       </Button>
       {audioUri && <Text>Recorded Audio: {audioUri}</Text>}
+      <View>
+        {emotion.map((item, index) =>(
+          <View key={index}>
+            
+        ))
+      </View>
+
     </View>
   );
 };
