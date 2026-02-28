@@ -116,8 +116,8 @@ const AudioRecording = () => {
       <View>
         {emotion.map((item, index) => (
           <View key={index}>
-            <Text>{item.name}</Text>
-            <Text>{(item.score * 100).toFixed(2)}</Text>
+            <Text style={styles.emotionTag}>{item.name}</Text>
+            <Text style={styles.numberTag}>{(item.score * 100).toFixed(2)}</Text>
           </View>
         ))}
         </View>
@@ -131,6 +131,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  emotionTag: {
+    color: '#f0917e',
+    fontSize: 18,
+    fontWeight: 'bold',
+    margin: 10,
+  },
+  numberTag: {
+    color: '#f0917e',
+    fontSize: 15,
+    margin: 10,
   },
 });
 
