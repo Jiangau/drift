@@ -118,7 +118,9 @@ const AudioRecording = () => {
         disabled = {loading}>
       </Button>
       
-      <View>
+      {loading && <Text>Waiting for the result ...</Text>}
+
+      <View style={styles.resultContainer}>
         {emotion.map((item, index) => (
           <View key={index}>
             <Text style={styles.emotionTag}>{item.name}</Text>
@@ -136,6 +138,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  resultContainer:{
+    backgroundColor: '#fff7e7',
+    padding: 20,
+    alignItems: 'left',
   },
   emotionTag: {
     color: '#f0917e',
