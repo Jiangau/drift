@@ -1,7 +1,5 @@
 export const sendingMessage = async(uri) => {
 
-    setLoading(true);
-
     if (!uri){
       console.error("NO_URI_");
       return;
@@ -27,10 +25,8 @@ export const sendingMessage = async(uri) => {
         headers: {'Content-Type': 'application/json'},
       });
 
-      const data = await response.json();
-      setEmotion(data);
-      setLoading(false);
       console.log("Prediction:",JSON.stringify(data,null,2));
+      return await response.json()
 
     } catch(err){
       console.error("Cannot send the message",err)
