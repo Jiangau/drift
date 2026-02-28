@@ -9,6 +9,7 @@ const AudioRecording = () => {
   const [recording, setRecording] = useState(null);
   const [audioUri, setAudioUri] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
+  const [emotion, setEmotion] = useState(null);
 
 
   //Permission
