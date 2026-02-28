@@ -10,6 +10,7 @@ const AudioRecording = () => {
   const [audioUri, setAudioUri] = useState(null);
   const [emotion, setEmotion] = useState([]);
   const [isRecording, setIsRecording] = useState(false);
+  const [loading, setLoading] = useState(false);
 
 
   //Permission
@@ -70,6 +71,8 @@ const AudioRecording = () => {
 
 
   const sendingMessage = async(uri) => {
+    
+    setLoading(true);
 
     if (!uri){
       console.error("NO_URI_");
