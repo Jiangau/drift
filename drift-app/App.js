@@ -117,7 +117,7 @@ const AudioRecording = () => {
         {emotion.map((item, index) => (
           <View key={index}>
             <Text>{item.name}</Text>
-            <Text>{item.score}</Text>
+            <Text>{(item.score * 100).toFixed(2)}</Text>
           </View>
         ))}
         </View>
