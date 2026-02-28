@@ -69,7 +69,7 @@ const AudioRecording = () => {
     sendingMessage(uri);
   };
 
-
+/*
   const sendingMessage = async(uri) => {
 
     setLoading(true);
@@ -107,7 +107,7 @@ const AudioRecording = () => {
     } catch(err){
       console.error("Cannot send the message",err)
     };
-  };
+  };*/
 
   //The view
   return(
