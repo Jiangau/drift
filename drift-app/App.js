@@ -8,8 +8,8 @@ import { AndroidOutputFormat } from 'expo-av/build/Audio';
 const AudioRecording = () => {
   const [recording, setRecording] = useState(null);
   const [audioUri, setAudioUri] = useState(null);
+  const [emotion, setEmotion] = useState([]);
   const [isRecording, setIsRecording] = useState(false);
-  const [emotion, setEmotion] = useState(null);
 
 
   //Permission
@@ -97,7 +97,9 @@ const AudioRecording = () => {
       });
 
       const data = await response.json();
+      setEmotion(data);
       console.log("Prediction:",JSON.stringify(data,null,2));
+
 
     } catch(err){
       console.error("Cannot send the message",err)
