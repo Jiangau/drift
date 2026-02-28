@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { sendingMessage } from '../service/sendingMessage';
 import { recordingAudio } from '../hook/recording';
 
-export default function mainScreen{
+export default function mainScreen() {
     const [emotion, setEmotion] = useState([]);
     const [audioUri, setAudioUri] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -17,6 +17,10 @@ export default function mainScreen{
             
             setEmotion(data);
             setLoading(false);
+        } else {
+            await startRecording();
         }
-    }
+    };
+
+
 }
