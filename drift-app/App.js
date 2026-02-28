@@ -96,7 +96,7 @@ const AudioRecording = () => {
       });
 
       const data = await response.json();
-      console.log("Prediction:",JSON.stringify(data,null,2));  
+      console.log("Prediction:",JSON.stringify(data,null,2));
 
     } catch(err){
       console.error("Cannot send the message",err)
@@ -108,11 +108,9 @@ const AudioRecording = () => {
     <View style={styles.container}>
       <Button
         title = {isRecording ? 'Stop Recording' : 'Start Recording'}
-        onPress = {isRecording ? stopRecording : startRecording}
-        disabled = {loading}>
+        onPress = {isRecording ? stopRecording : startRecording}>
       </Button>
-      {/*{audioUri && <Text>Recorded Audio: {audioUri}</Text>}*/}
-      {loading && <Text></Text>}
+      {audioUri && <Text>Recorded Audio: {audioUri}</Text>}
     </View>
   );
 };
