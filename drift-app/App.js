@@ -112,13 +112,13 @@ const AudioRecording = () => {
   //The view
   return(
     <View style={styles.container}>
-      <Button
+      <Button 
         title = {isRecording ? 'Stop Recording' : 'Start Recording'}
         onPress = {isRecording ? stopRecording : startRecording}
         disabled = {loading}>
       </Button>
       
-      {loading && <Text>Waiting for the result ...</Text>}
+      {loading && <Text style={styles.loadingContent}>Waiting for the result ...</Text>}
 
       <View style={styles.resultContainer}>
         {emotion.map((item, index) => (
@@ -136,22 +136,23 @@ const AudioRecording = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 24,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'left',
+  },
+  loadingContent:{
+    alignItems: 'center', 
   },
   resultContainer:{
     backgroundColor: '#fff7e7',
     padding: 20,
-    alignItems: 'left',
   },
   emotionTag: {
-    color: '#f0917e',
     fontSize: 18,
     fontWeight: 'bold',
     margin: 10,
   },
   numberTag: {
-    color: '#f0917e',
     fontSize: 15,
     margin: 10,
   },
