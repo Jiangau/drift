@@ -24,10 +24,10 @@ def sendAudio():
 
         print(f"File received:{audioFile.filename}")
         
+        # separate to an AI caller service
         job_id = client.expression_measurement.batch.start_inference_job_from_local_file(
             file=[(audioFile.filename, audioFile.stream)],
             json=Models(prosody=Prosody(granularity="utterance"),),
-            
         )
         
         print(jsonify(f"Jobstarted. {job_id}"), 200)
@@ -67,7 +67,9 @@ def sendAudio():
             modelData = fileResult.burst.grouped_predictions[0].predictions[0]
             finalOutput = topEmotions(modelData, "descriptions")
             
-        
+        # save the emotions to DB
+        # seperate into a layer "services"
+        # return to client
         return jsonify(finalOutput), 200
     
     except Exception as e:
