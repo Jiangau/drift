@@ -1,6 +1,6 @@
 import React from 'react';
-import mainScreen from './src/screen/homePage';
+import MainScreen from './src/screen/homePage';
 
 export default function App(){
-  return <mainScreen/>
+  return <MainScreen/>
 }

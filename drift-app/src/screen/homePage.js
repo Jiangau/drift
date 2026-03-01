@@ -1,11 +1,10 @@
 import { View, StyleSheet, Text, Button, Platform } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { SendingMessage } from '../service/SendingMessage';
-import { RecordingAudio } from '../hook/recording';
+import { SendingMessage } from '../services/sendingMessage';
+import { RecordingAudio } from '../hooks/recording';
 
 export default function MainScreen() {
     const [emotion, setEmotion] = useState([]);
-    const [audioUri, setAudioUri] = useState(null);
     const [loading, setLoading] = useState(false);
     const {startRecording, stopRecording, isRecording} = RecordingAudio();
 
@@ -45,3 +44,29 @@ export default function MainScreen() {
       );
 
 };
+
+
+const styles = StyleSheet.create({
+container: {
+  flex: 1,
+  padding: 24,
+  justifyContent: 'center',
+  alignItems: 'flex-start',
+},
+loadingContent:{
+  paddingLeft: 120,
+},
+resultContainer:{
+  backgroundColor: '#fff7e7',
+  padding: 20,
+},
+emotionTag: {
+  fontSize: 18,
+  fontWeight: 'bold',
+  margin: 10,
+},
+numberTag: {
+  fontSize: 15,
+  margin: 10,
+},
+});

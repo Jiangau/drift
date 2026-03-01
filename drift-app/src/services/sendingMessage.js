@@ -1,4 +1,4 @@
-export const SendingMessage = (uri) => {
+export const SendingMessage = async(uri) => {
 
     if (!uri){
       console.error("NO_URI_");
@@ -22,9 +22,9 @@ export const SendingMessage = (uri) => {
       const response = await fetch(`http://192.168.1.182:5001/analyze`,{ 
         method: 'POST',
         body: formData,
-        headers: {'Content-Type': 'application/json'},
+        //headers: {'Content-Type': 'application/json'},
       });
-
+      
       console.log("Prediction:",JSON.stringify(data,null,2));
       return await response.json()
 
