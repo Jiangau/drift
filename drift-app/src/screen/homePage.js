@@ -1,19 +1,19 @@
 import { View, StyleSheet, Text, Button, Platform } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { sendingMessage } from '../service/sendingMessage';
-import { recordingAudio } from '../hook/recording';
+import { SendingMessage } from '../service/SendingMessage';
+import { RecordingAudio } from '../hook/recording';
 
-export default function mainScreen() {
+export default function MainScreen() {
     const [emotion, setEmotion] = useState([]);
     const [audioUri, setAudioUri] = useState(null);
     const [loading, setLoading] = useState(false);
-    const {startRecording, stopRecording, isRecording} = recordingAudio();
+    const {startRecording, stopRecording, isRecording} = RecordingAudio();
 
     const controller = async() => {
         if (isRecording) {
             setLoading(true);
             const uri = await stopRecording();
-            const data = await sendingMessage(uri);
+            const data = await SendingMessage(uri);
             
             setEmotion(data);
             setLoading(false);
@@ -27,7 +27,7 @@ export default function mainScreen() {
         <View style={styles.container}>
           <Button 
             title = {isRecording ? 'Stop Recording' : 'Start Recording'}
-            onPress = {isRecording ? stopRecording : startRecording}
+            onPress = {controller}//{isRecording ? stopRecording : startRecording}
             disabled = {loading}>
           </Button>
           

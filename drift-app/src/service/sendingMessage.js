@@ -1,4 +1,4 @@
-export const sendingMessage = async(uri) => {
+export const SendingMessage = (uri) => {
 
     if (!uri){
       console.error("NO_URI_");

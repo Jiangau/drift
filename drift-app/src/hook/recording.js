@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Audio } from 'expo-av';
 
-export const recordingAudio = async() => {
+export const RecordingAudio = () => {
     const [recording, setRecording] = useState(null);
     const [isRecording, setIsRecording] = useState(false);
 
