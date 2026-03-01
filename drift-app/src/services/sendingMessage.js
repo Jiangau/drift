@@ -1,3 +1,5 @@
+import {Platform} from 'react-native';
+
 export const SendingMessage = async(uri) => {
 
     if (!uri){
@@ -24,7 +26,7 @@ export const SendingMessage = async(uri) => {
         body: formData,
         //headers: {'Content-Type': 'application/json'},
       });
-      
+      const data = await response.json();
       console.log("Prediction:",JSON.stringify(data,null,2));
       return await response.json()
 

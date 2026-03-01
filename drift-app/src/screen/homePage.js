@@ -13,8 +13,11 @@ export default function MainScreen() {
             setLoading(true);
             const uri = await stopRecording();
             const data = await SendingMessage(uri);
-            
-            setEmotion(data);
+            if (Array.isArray(data)){
+              setEmotion(data);
+            } else {
+              setEmotion([]);
+            };
             setLoading(false);
         } else {
             await startRecording();
