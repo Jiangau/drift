@@ -28,7 +28,7 @@ export const SendingMessage = async(uri) => {
       });
       const data = await response.json();
       console.log("Prediction:",JSON.stringify(data,null,2));
-      return await response.json()
+      return data
 
     } catch(err){
       console.error("Cannot send the message",err)
