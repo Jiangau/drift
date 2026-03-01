@@ -54,7 +54,6 @@ container: {
   flex: 1,
   padding: 24,
   justifyContent: 'center',
-  alignItems: 'flex-start',
 },
 loadingContent:{
   paddingLeft: 120,
