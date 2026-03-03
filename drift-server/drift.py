@@ -2,14 +2,19 @@ from hume.expression_measurement.batch.types import Models, Prosody
 from hume import HumeClient
 from dotenv import load_dotenv
 from flask import Flask, jsonify, request
+from flask_sqlalchemy import SQLAlchemy
 import os
 import time
 
 load_dotenv()
 
 app = Flask(__name__)
+basedir = os.path.abspath(__file__)
 client = HumeClient(api_key=os.getenv("HUME_API_KEY"))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'database.db')
+app.config['SQLALECHMY_TRACK_MODIFICATIONS'] = False
 
+db = SQLAlchemy(app)
 
 @app.route('/analyze', methods=['GET','POST'])
 def sendAudio():
