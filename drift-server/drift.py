@@ -19,7 +19,10 @@ db = SQLAlchemy(app)
 class Emotion(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     emotions = db.Column(db.String(100), nullable=False)
+    date = db.Column(db.DateTime(timezone=True),server_default=func.now())
     
+    def __repr__(self):
+        return f'<User {self.emotions}>'
     
 @app.route('/analyze', methods=['GET','POST'])
 def sendAudio():
@@ -80,6 +83,8 @@ def sendAudio():
         # save the emotions to DB
         # seperate into a layer "services"
         # return to client
+        db.session.add(finalOutput)
+        db.session.commit()
         return jsonify(finalOutput), 200
     
     except Exception as e:
@@ -93,4 +98,6 @@ def sendAudio():
     
 
 if __name__ == "__main__":
+    with app.app_context():
+        db.create_all()
     app.run(host="0.0.0.0", port=5001, debug=True)
