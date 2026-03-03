@@ -16,6 +16,11 @@ app.config['SQLALECHMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
+class Emotion(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    emotions = db.Column(db.String(100), nullable=False)
+    
+    
 @app.route('/analyze', methods=['GET','POST'])
 def sendAudio():
     try:
