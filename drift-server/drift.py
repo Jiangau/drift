@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from services.apiCaller import apiCaller
-from services.topEmotion import topEmotions, topResult
+from services.topEmotion import topResult
 
 app = Flask(__name__)
 
