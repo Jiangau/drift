@@ -14,4 +14,4 @@ def upload():
     
     print(f"File received:{audioFile.filename}")
     
-    return audioFile.filename
+    return jsonify({"filename": audioFile.filename}), 200
