@@ -11,7 +11,11 @@ def topResult(result):
     if not result: return []
     
     temp = result[0]
-    fileResult = temp.results.predictions[0].models
+    try:
+        fileResult = temp.results.predictions[0].models
+    except (IndexError, AttributeError):
+        return []
+        
     finalOutput = []
     modelData = None
 
