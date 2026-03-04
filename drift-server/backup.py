@@ -1,0 +1,103 @@
+from hume.expression_measurement.batch.types import Models, Prosody
+from hume import HumeClient
+from dotenv import load_dotenv
+from flask import Flask, jsonify, request
+from flask_sqlalchemy import SQLAlchemy
+import os
+import time
+
+load_dotenv()
+
+app = Flask(__name__)
+basedir = os.path.abspath(__file__)
+client = HumeClient(api_key=os.getenv("HUME_API_KEY"))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'database.db')
+app.config['SQLALECHMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+
+class Emotion(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    emotions = db.Column(db.String(100), nullable=False)
+    date = db.Column(db.DateTime(timezone=True),server_default=func.now())
+    
+    def __repr__(self):
+        return f'<User {self.emotions}>'
+    
+@app.route('/analyze', methods=['GET','POST'])
+def sendAudio():
+    try:
+        print("Files arrived:", list(request.files.keys()))
+        print(request.files.get('file'))
+        audioFile = request.files.get('file')
+        
+        if audioFile is None:
+            print("ERROR:'file missing'")
+            return jsonify({"error":"No file received."}),400
+
+        print(f"File received:{audioFile.filename}")
+        
+        # separate to an AI caller service
+        job_id = client.expression_measurement.batch.start_inference_job_from_local_file(
+            file=[(audioFile.filename, audioFile.stream)],
+            json=Models(prosody=Prosody(granularity="utterance"),),
+        )
+        
+        print(jsonify(f"Jobstarted. {job_id}"), 200)
+        while True:
+            job_details = client.expression_measurement.batch.get_job_details(id=job_id)
+            status = job_details.state.status
+
+            if status == "COMPLETED":
+                print("Job completed.")
+                break
+            elif status == "FAILED":
+                print("Job failed.")
+                break
+
+            print(f"Status: {status}")
+            time.sleep(3)
+        
+        result = client.expression_measurement.batch.get_job_predictions(job_id)
+        #serializableResult = [r.dict() if hasattr(r, 'dict') else r for r in result]
+        
+        def topEmotions(resultDict, attr):
+            if not resultDict: return []
+            emotions = getattr(resultDict, attr, [])
+            sortedDict = sorted(emotions, key=lambda x:x.score, reverse=True)
+            return [{"name":y.name, "score": y.score} for y in sortedDict[:3]]
+
+        temp = result[0]
+        fileResult = temp.results.predictions[0].models
+        finalOutput = []
+        modelData = None
+        
+        
+        if fileResult.prosody and fileResult.prosody.grouped_predictions:
+            modelData = fileResult.prosody.grouped_predictions[0].predictions[0]
+            finalOutput = topEmotions(modelData, "emotions")
+        elif fileResult.burst and fileResult.burst.grouped_predictions:
+            modelData = fileResult.burst.grouped_predictions[0].predictions[0]
+            finalOutput = topEmotions(modelData, "descriptions")
+            
+        # save the emotions to DB
+        # seperate into a layer "services"
+        # return to client
+        db.session.add(finalOutput)
+        db.session.commit()
+        return jsonify(finalOutput), 200
+    
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({
+            "status":"error",
+            "message": str(e)
+        }), 500
+
+    
+
+if __name__ == "__main__":
+    with app.app_context():
+        db.create_all()
+    app.run(host="0.0.0.0", port=5001, debug=True)
