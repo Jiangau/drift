@@ -5,9 +5,9 @@ import os
 
 client = HumeClient(api_key=os.getenv("HUME_API_KEY"))
 
-def apiCaller(audioFile):
+def apiCaller(audio):
     job_id = client.expression_measurement.batch.start_inference_job_from_local_file(
-            file=[(audioFile.filename, audioFile.stream)],
+            file=[(audio.filename, audio.stream)],
             json=Models(prosody=Prosody(granularity="utterance"),),
     )
         
