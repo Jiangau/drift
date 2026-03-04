@@ -11,6 +11,8 @@ load_dotenv()
 app = Flask(__name__)
 basedir = os.path.abspath(__file__)
 client = HumeClient(api_key=os.getenv("HUME_API_KEY"))
+
+"""
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'database.db')
 app.config['SQLALECHMY_TRACK_MODIFICATIONS'] = False
 
@@ -23,6 +25,8 @@ class Emotion(db.Model):
     
     def __repr__(self):
         return f'<User {self.emotions}>'
+        
+"""
     
 @app.route('/analyze', methods=['GET','POST'])
 def sendAudio():
