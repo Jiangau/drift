@@ -2,7 +2,7 @@ from flask import jsonify, request, Blueprint
 
 fileReader = Blueprint("fileReader", __name__)
 
-@fileReader.route("/upload", methods=['POST'])
+@fileReader.route("/upload", methods=['GET','POST'])
 def upload():
     print("Files arrived:", list(request.files.keys()))
     print(request.files.get('file'))
@@ -14,4 +14,4 @@ def upload():
     
     print(f"File received:{audioFile.filename}")
     
-    return jsonify({"filename": audioFile.filename}), 200
+    return jsonify(audioFile), 200

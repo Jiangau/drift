@@ -88,8 +88,8 @@ def sendAudio():
         # save the emotions to DB
         # seperate into a layer "services"
         # return to client
-        db.session.add(finalOutput)
-        db.session.commit()
+        #db.session.add(finalOutput)
+        #db.session.commit()
         return jsonify(finalOutput), 200
     
     except Exception as e:
