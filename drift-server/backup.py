@@ -31,6 +31,7 @@ class Emotion(db.Model):
 @app.route('/analyze', methods=['GET','POST'])
 def sendAudio():
     try:
+        #Done Transfering to another file
         print("Files arrived:", list(request.files.keys()))
         print(request.files.get('file'))
         audioFile = request.files.get('file')
